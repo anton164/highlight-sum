@@ -450,8 +450,10 @@ def binarize_dataset(dict_path,
                      output_dir,
                      target_lang='target',
                      only_target=False,
-                     no_val=False):
-    cmd = "python ../fairseq_cli/preprocess.py " \
+                     no_val=False,
+                     only_test=False):
+    if only_test:
+        cmd = "python ../fairseq_cli/preprocess.py " \
           "--source-lang source " \
           "--target-lang {} " \
           "--only-target {} " \
@@ -461,12 +463,27 @@ def binarize_dataset(dict_path,
           "--srcdict {} " \
           "--tgtdict {}".format(target_lang,
                                 only_target,
-                                os.path.join(input_dir, "train.bpe"),
+                                os.path.join(input_dir, "test.bpe"),
                                 output_dir,
                                 os.path.join(dict_path, 'dict.txt'),
                                 os.path.join(dict_path, 'dict.txt'))
-    if not no_val:
-        cmd += " --validpref {}".format(os.path.join(input_dir, "val.bpe"))
+    else:
+        cmd = "python ../fairseq_cli/preprocess.py " \
+            "--source-lang source " \
+            "--target-lang {} " \
+            "--only-target {} " \
+            "--trainpref {} " \
+            "--destdir {} " \
+            "--workers 1 " \
+            "--srcdict {} " \
+            "--tgtdict {}".format(target_lang,
+                                    only_target,
+                                    os.path.join(input_dir, "train.bpe"),
+                                    output_dir,
+                                    os.path.join(dict_path, 'dict.txt'),
+                                    os.path.join(dict_path, 'dict.txt'))
+        if not no_val:
+            cmd += " --validpref {}".format(os.path.join(input_dir, "val.bpe"))
 
     process = Popen(cmd.split(), stdout=PIPE, stderr=PIPE)
     stdout, stderr = process.communicate()
@@ -667,7 +684,7 @@ if __name__ == '__main__':
         bpe_tokenize(tokenizer_dir=args.tokenizer_dir, input_dir=args.input_dir, output_dir=args.input_dir, no_val=args.no_val,
                      source_target=args.source_target, split_name="test")
         binarize_dataset(dict_path=args.tokenizer_dir, input_dir=args.input_dir, output_dir=os.path.join(args.input_dir, 'data_bin'),
-                         no_val=args.no_val, target_lang=args.source_target.split(',')[1])
+                         no_val=args.no_val, target_lang=args.source_target.split(',')[1], only_test=True)
     if args.mode == 'binarize':
         binarize_dataset(dict_path=args.tokenizer_dir, input_dir=args.input_dir,
                          output_dir=os.path.join(args.input_dir, 'data_bin'),

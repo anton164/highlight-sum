@@ -41,5 +41,5 @@ python evaluate_hypo.py --mode convert_hypo_to_json --base_dir ../cache --sub_di
 ```
 cd preprocess
 mkdir ../cache/xsum/qagen
-python sm_inference_asum.py --task gen_qa --base_dir ../cache --source_dir xsum/processed-data --output_dir ../cache/xsum/qagen --num_workers 1 --bsz 5 --beam 60 --max_len 60 --min_len 8 --checkpoint_dir ../cache/qagen-model --ckp_file checkpoint2.pt --bin_dir xsum/processed-data/data_bin --diverse_beam_groups 60 --diverse_beam_strength 0.5 --batch_lines True --input_file test.target.hypo --return_token_scores True
+python sm_inference_asum.py --task gen_qa --base_dir ../cache --source_dir xsum/processed-data --output_dir ../cache/xsum/qagen --num_workers 1 --bsz 5 --beam 60 --max_len 60 --min_len 8 --checkpoint_dir ../cache/qagen-model --ckp_file checkpoint2.pt --bin_dir /Users/anton164/git/qa-sum/fact-check-summarization/cache/xsum/processed-data/data_bin --diverse_beam_groups 60 --diverse_beam_strength 0.5 --batch_lines True --input_file test.target.hypo --return_token_scores True
 ```
