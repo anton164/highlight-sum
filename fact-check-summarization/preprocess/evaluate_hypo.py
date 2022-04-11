@@ -564,8 +564,9 @@ def _ans_lm_score(pos_scores, tokens, special_token=50259):
 
 
 def filter_qas_dataset_lm_score(args):
-    qas_files = sorted(list(
-        glob.glob(os.path.join(args.base_dir, args.sub_dir, args.pattern))))
+    path = os.path.join(args.base_dir, args.sub_dir, args.pattern)
+    qas_files = sorted(list(glob.glob(path)))
+    print(path, qas_files)
     for qas_file in tqdm(qas_files):
         if args.filter_ans_lm_score:
             output_file = qas_file + '_filtered{}'.format(args.filter_ans_lm_threshold)
