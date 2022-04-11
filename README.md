@@ -15,7 +15,7 @@ python -m nltk.downloader punkt
 ```
 
 ### Generate questions with `/question_generator` model
-Github repo: https://github.com/AMontgomerie/question_generator
+Github repo: https://github.com/AMontgomerie/question_generator  
 Notebook: https://colab.research.google.com/drive/1SyMepcPlxSVG_anRUwiMo9w5TjSewNOx?authuser=1#scrollTo=5fwqys_1hwbi
 
 1. Create separate conda env & install dependencies
@@ -32,7 +32,9 @@ pip install -r requirements.txt -qq
 ```
 
 ### Generate questions with QAGen Model
-Github repo: https://github.com/amazon-research/fact-check-summarization
+Github repo: https://github.com/amazon-research/fact-check-summarization  
+Notebook:  https://colab.research.google.com/drive/1fhncXX3-V9cgJNEpRF9Ch8etMtIkTv0B?authuser=1#scrollTo=uTMMMzYMdyE7    
+Data: [data/qa/qagen](data/qa/qagen)
 
 1. Create separate conda env & install dependencies
 ```
