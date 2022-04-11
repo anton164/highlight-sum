@@ -5,6 +5,8 @@ conda activate qa-sum
 ```
 
 ### Generate questions with `/question_generation` model
+Github repo: https://github.com/patil-suraj/question_generation
+
 1. Install additional dependencies
 ```
 pip install transformers==3.0.0
@@ -12,8 +14,19 @@ pip install nltk==3.7
 python -m nltk.downloader punkt
 ```
 
+### Generate questions with `/question_generator` model
+Github repo: https://github.com/AMontgomerie/question_generator
+
+```
+cd question_generator
+conda create python=3.8 -n question_generator
+conda activate question_generator
+pip install -r requirements.txt -qq
+```
 
 ### Generate questions with QAGen Model
+Github repo: https://github.com/amazon-research/fact-check-summarization
+
 1. Create separate conda env & install dependencies
 ```
 cd qagen-model
