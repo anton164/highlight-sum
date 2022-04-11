@@ -16,12 +16,19 @@ python -m nltk.downloader punkt
 
 ### Generate questions with `/question_generator` model
 Github repo: https://github.com/AMontgomerie/question_generator
+Notebook: https://colab.research.google.com/drive/1SyMepcPlxSVG_anRUwiMo9w5TjSewNOx?authuser=1#scrollTo=5fwqys_1hwbi
 
+1. Create separate conda env & install dependencies
 ```
 cd question_generator
 conda create python=3.8 -n question_generator
 conda activate question_generator
 pip install -r requirements.txt -qq
+```
+
+2. Generate questions
+```
+! python run_qg.py --text_file articles/xsum_source_2.txt --answer_style multiple_choice
 ```
 
 ### Generate questions with QAGen Model
