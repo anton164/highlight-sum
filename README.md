@@ -4,12 +4,21 @@ conda create -n qa-sum python=3.8
 conda activate qa-sum
 ```
 
+### Generate questions with `/question_generation` model
+1. Install additional dependencies
+```
+pip install transformers==3.0.0
+pip install nltk==3.7
+python -m nltk.downloader punkt
+```
+
+
 ### Generate questions with QAGen Model
 1. Create separate conda env & install dependencies
 ```
-cd fact-check-summarization
-conda create -n fact-check-summarization python=3.6
-conda activate fact-check-summarization
+cd qagen-model
+conda create -n qagen-model python=3.6
+conda activate qagen-model
 pip install -r requirements.txt
 pip install --editable ./
 python -m spacy download en_core_web_lg
@@ -41,5 +50,9 @@ python evaluate_hypo.py --mode convert_hypo_to_json --base_dir ../cache --sub_di
 ```
 cd preprocess
 mkdir ../cache/xsum/qagen
-python sm_inference_asum.py --task gen_qa --base_dir ../cache --source_dir xsum/processed-data --output_dir ../cache/xsum/qagen --num_workers 1 --bsz 5 --beam 60 --max_len 60 --min_len 8 --checkpoint_dir ../cache/qagen-model --ckp_file checkpoint2.pt --bin_dir /Users/anton164/git/qa-sum/fact-check-summarization/cache/xsum/processed-data/data_bin --diverse_beam_groups 60 --diverse_beam_strength 0.5 --batch_lines True --input_file test.target.hypo --return_token_scores True
+python sm_inference_asum.py --task gen_qa --base_dir ../cache --source_dir xsum/processed-data --output_dir ../cache/xsum/qagen --num_workers 1 --bsz 5 --beam 60 --max_len 60 --min_len 8 --checkpoint_dir ../cache/qagen-model --ckp_file checkpoint2.pt --bin_dir /Users/anton164/git/qa-sum/qa-gen-model/cache/xsum/processed-data/data_bin --diverse_beam_groups 60 --diverse_beam_strength 0.5 --batch_lines True --input_file test.target.hypo --return_token_scores True
+```
+7. Filter generated qa-pairs
+```
+python evaluate_hypo.py --mode filter_qas_dataset_lm_score --base_dir ../cache --sub_dir xsum/processed-data --pattern test.target.hypo.beam60.qas
 ```
