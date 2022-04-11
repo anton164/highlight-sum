@@ -50,7 +50,7 @@ class QGPipeline:
         inputs = " ".join(inputs.split())
         sents, answers = self._extract_answers(inputs)
         flat_answers = list(itertools.chain(*answers))
-        
+        print("answers", answers)
         if len(flat_answers) == 0:
           return []
 
@@ -72,8 +72,8 @@ class QGPipeline:
             attention_mask=inputs['attention_mask'].to(self.device), 
             max_length=32,
             num_beams=4,
+            #num_return_sequences=2
         )
-        
         questions = [self.tokenizer.decode(ids, skip_special_tokens=True) for ids in outs]
         return questions
     
@@ -85,6 +85,8 @@ class QGPipeline:
             input_ids=inputs['input_ids'].to(self.device), 
             attention_mask=inputs['attention_mask'].to(self.device), 
             max_length=32,
+            # num_beams=2,
+            # num_return_sequences=2
         )
         
         dec = [self.ans_tokenizer.decode(ids, skip_special_tokens=False) for ids in outs]
