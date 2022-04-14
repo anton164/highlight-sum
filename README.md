@@ -4,7 +4,7 @@ conda create -n highlight-sum python=3.8
 conda activate highlight-sum
 ```
 
-## Run Streamlit app\
+## Run Streamlit app
 ```
 streamlit run app.py
 ```
