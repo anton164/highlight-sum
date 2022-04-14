@@ -1,14 +1,20 @@
-# Main repo
+# Setup
 ```
-conda create -n qa-sum python=3.8
-conda activate qa-sum
+conda create -n highlight-sum python=3.8
+conda activate highlight-sum
 ```
 
+# External repositories
+
+in `/external-repos`
 ### Generate questions with `/question_generation` model
 Github repo: https://github.com/patil-suraj/question_generation
 
-1. Install additional dependencies
+1. Create separate conda env & install dependencies
 ```
+cd external-repos/suraj-question_generation
+conda create -n question_generation python=3.8
+conda activate question_generation
 pip install transformers==3.0.0
 pip install nltk==3.7
 python -m nltk.downloader punkt
@@ -20,7 +26,7 @@ Notebook: https://colab.research.google.com/drive/1SyMepcPlxSVG_anRUwiMo9w5TjSew
 
 1. Create separate conda env & install dependencies
 ```
-cd question_generator
+cd external-repos/AMontgomerie-question_generator
 conda create python=3.8 -n question_generator
 conda activate question_generator
 pip install -r requirements.txt -qq
@@ -31,14 +37,14 @@ pip install -r requirements.txt -qq
 ! python run_qg.py --text_file articles/xsum_source_2.txt --answer_style multiple_choice
 ```
 
-### Generate questions with QAGen Model
+### Generate questions with Amazon QAGen Model
 Github repo: https://github.com/amazon-research/fact-check-summarization  
 Notebook:  https://colab.research.google.com/drive/1fhncXX3-V9cgJNEpRF9Ch8etMtIkTv0B?authuser=1#scrollTo=uTMMMzYMdyE7    
 Data: [data/qa/qagen](data/qa/qagen)
 
 1. Create separate conda env & install dependencies
 ```
-cd qagen-model
+cd external-repos/fact-check-summarization
 conda create -n qagen-model python=3.6
 conda activate qagen-model
 pip install -r requirements.txt
