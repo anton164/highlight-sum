@@ -1,5 +1,10 @@
 from datasets import load_dataset
 import re
+import spacy
+
+def mark_exclusion(example):
+    example["valid_summary"] = not should_exclude_summary(example['text'])
+    return example
 
 def should_exclude_summary(summary: str) -> bool:
     """
@@ -19,9 +24,7 @@ def should_exclude_summary(summary: str) -> bool:
     else:
         return False
 
-if __name__ == "__main__":
-    xsum_test = load_dataset('xsum')['test']
 
-    good_examples = []
-    for example in xsum_test:
-        good_examples.append
+if __name__ == "__main__":
+    newsroom_test = load_dataset('newsroom', split='test', data_dir="data/newsroom")
+    newsroom_test_marked = newsroom_test.map(mark_exclusion, num_proc=3)

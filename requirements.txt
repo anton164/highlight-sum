@@ -3,3 +3,4 @@ torch==1.11.0
 streamlit==1.8.1
 watchdog==2.1.7
 st-annotated-text==3.0.0
+spacey==3.2.4
