@@ -127,16 +127,35 @@ def write_index(example, index):
 
 
 def build_metadata_dict(dataset) -> dict:
+    # return {
+    #     index: {
+    #         "supported-summary-sentences": sents,
+    #         "supported-summary-entities": ents,
+    #         "source": source,
+    #         "url": url,
+    #         "density_bin": density_bin,
+    #     }
+    #     for index, sents, ents, source, url, density_bin, coverage_bin in zip(
+    #         dataset["id"],
+    #         dataset["supported_summary_sentences"],
+    #         dataset["supported_summary_entities"],
+    #         dataset['text'],
+    #         dataset['url'],
+    #         dataset['density_bin'],
+    #         dataset['coverage_bin'],
+    #     )
+    # }
     return {
-        index: {
-            "supported-summary-sentences": sents,
-            "supported-summary-entities": ents,
+        example['id']: {
+            "supported-summary-sentences": example['supported_summary_sentences'],
+            "supported-summary-entities": example['supported_summary_entities'],
+            "source": example['source'],
+            "url": example['url'],
+            "density_bin": example['density_bin'],
+            "compression_bin": example['compression_bin'],
+            "coverage_bin": example['coverage_bin'],
         }
-        for index, sents, ents in zip(
-            dataset["id"],
-            dataset["supported_summary_sentences"],
-            dataset["supported_summary_entities"],
-        )
+        for example in dataset
     }
 
 
@@ -144,7 +163,7 @@ if __name__ == "__main__":
     newsroom_test = load_dataset("newsroom", split="test", data_dir="data/newsroom-raw")
     newsroom_test = newsroom_test.map(write_index, with_indices=True, num_proc=3)
 
-    test_sample = newsroom_test.train_test_split(test_size=200)["test"]
+    test_sample = newsroom_test.train_test_split(test_size=200, seed=42)["test"]
     test_sample = test_sample.map(mark_exclusion, num_proc=3)
 
     nlp = spacy.load("en_core_web_lg")
@@ -163,7 +182,7 @@ if __name__ == "__main__":
     }
     store_model_summaries(
         "newsroom",
-        "newsroom-gold",
+        "gold",
         newsroom_gold_standard_config,
         id2gold_summary,
         build_metadata_dict(test_sample_annotated)
