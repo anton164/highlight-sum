@@ -1,4 +1,5 @@
 import streamlit as st
+import pandas as pd
 from annotated_text import annotated_text
 from sumtool.storage import get_summaries
 
@@ -29,9 +30,13 @@ def load_data():
     return [
         {
             "id": index,
+            "url": data['metadata']['url'],
             "source": data['metadata']['source'],
             "summary": data['summary'],
-            "highlights": data['metadata']['supported-summary-entities']
+            "highlights": data['metadata']['supported_summary_entities'],
+            "density_bin": data['metadata']['density_bin'],
+            "compression_bin": data['metadata']['compression_bin'],
+            "coverage_bin": data['metadata']['compression_bin'],
         } for index, data in all_data.items()
     ]
 #     return [
@@ -51,6 +56,17 @@ def render_overlaps():
     summary_with_overlaps = load_data()
     for i, data in enumerate(summary_with_overlaps):
         st.subheader(f"Summary '{data['id']}'")
+        # breakpoint()
+        st.table(
+            pd.DataFrame(
+                {
+                    "url": [data['url']],
+                    "density_bin": [data['density_bin']],
+                    "compression_bin": [data['compression_bin']],
+                    "coverage_bin": [data['coverage_bin']],
+                }).iloc[0]
+        )
+
         st.write("**Ground Truth Summary:**")
         st_annotate_highlights(data["summary"], data["highlights"])
         st.write("**Source Document:**")

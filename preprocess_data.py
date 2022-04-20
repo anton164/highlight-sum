@@ -129,9 +129,9 @@ def write_index(example, index):
 def build_metadata_dict(dataset) -> dict:
     return {
         example['id']: {
-            "supported-summary-sentences": example['supported_summary_sentences'],
-            "supported-summary-entities": example['supported_summary_entities'],
-            "source": example['source'],
+            "supported_summary_sentences": example['supported_summary_sentences'],
+            "supported_summary_entities": example['supported_summary_entities'],
+            "source": example['text'],
             "url": example['url'],
             "density_bin": example['density_bin'],
             "compression_bin": example['compression_bin'],
