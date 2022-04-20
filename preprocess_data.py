@@ -127,24 +127,6 @@ def write_index(example, index):
 
 
 def build_metadata_dict(dataset) -> dict:
-    # return {
-    #     index: {
-    #         "supported-summary-sentences": sents,
-    #         "supported-summary-entities": ents,
-    #         "source": source,
-    #         "url": url,
-    #         "density_bin": density_bin,
-    #     }
-    #     for index, sents, ents, source, url, density_bin, coverage_bin in zip(
-    #         dataset["id"],
-    #         dataset["supported_summary_sentences"],
-    #         dataset["supported_summary_entities"],
-    #         dataset['text'],
-    #         dataset['url'],
-    #         dataset['density_bin'],
-    #         dataset['coverage_bin'],
-    #     )
-    # }
     return {
         example['id']: {
             "supported-summary-sentences": example['supported_summary_sentences'],
