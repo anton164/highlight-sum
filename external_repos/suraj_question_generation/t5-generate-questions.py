@@ -1,5 +1,4 @@
-from yaml import load
-from question_generation.pipelines import pipeline
+from pipelines import pipeline
 from datasets import load_dataset
 
 xum = load_dataset("xsum")
