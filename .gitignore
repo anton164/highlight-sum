@@ -130,5 +130,5 @@ dmypy.json
 
 .DS_Store
 
-# newsroom data
-data/newsroom
+# raw newsroom data
+data/newsroom-raw
