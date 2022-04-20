@@ -1,0 +1,6 @@
+{
+  "Authors": "Grusky, Max and Naaman, Mor and Artzi, Yoav",
+  "Link": "https://arxiv.org/abs/1804.11283",
+  "Paper": "Newsroom: A Dataset of 1.3 Million Summaries with Diverse Extractive Strategies",
+  "sumtool_model": "newsroom-gold"
+}
