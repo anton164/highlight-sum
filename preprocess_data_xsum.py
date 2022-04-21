@@ -52,6 +52,7 @@ def select_summary_sentences_and_entities(
 
     sentences_selected = {}
     selected_entities = tuple()
+    missing_entities = tuple()
 
     for sent in summary_nlp.sents:
         sentences_selected[sent.text] = True
@@ -62,20 +63,22 @@ def select_summary_sentences_and_entities(
             if match_result:
                 selected_entities = selected_entities + (e,)
             else:
+                missing_entities = missing_entities + (e,)
                 sentences_selected[e.sent.text] = False
     result = []
     for sent in summary_nlp.sents:
         if sentences_selected[sent.text]:
             result.append(sent.text)
-    return " ".join(result), selected_entities
+    return " ".join(result), selected_entities, missing_entities
 
 
 def write_filtered_summary_sentences_and_entities(example):
-    supported_sents, supported_ents = select_summary_sentences_and_entities(
+    supported_sents, supported_ents, missing_ents = select_summary_sentences_and_entities(
         nlp, example["document"], example["summary"]
     )
     example["supported_summary_sentences"] = supported_sents
     example["supported_summary_entities"] = [ent.text for ent in supported_ents]
+    example["missing_summary_entities"] = [ent.text for ent in missing_ents]
 
     return example
 
@@ -90,6 +93,7 @@ def build_metadata_dict(dataset) -> dict:
         example['id']: {
             "supported_summary_sentences": example['supported_summary_sentences'],
             "supported_summary_entities": example['supported_summary_entities'],
+            "missing_summary_entities": example['missing_summary_entities'],
             "source": example['document']
         }
         for example in dataset
