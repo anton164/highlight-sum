@@ -56,18 +56,18 @@ def load_xsum_data():
 
 def render_overlaps():
     st.title("Summary Overlaps")
-    summary_with_overlaps = load_xsum_data()
+    summary_with_overlaps = load_newsroom_data()
     for i, data in enumerate(summary_with_overlaps):
         st.subheader(f"Summary '{data['id']}'")
-        # st.table(
-        #     pd.DataFrame(
-        #         {
-        #             "url": [data['url']],
-        #             "density_bin": [data['density_bin']],
-        #             "compression_bin": [data['compression_bin']],
-        #             "coverage_bin": [data['coverage_bin']],
-        #         }).iloc[0]
-        # )
+        st.table(
+            pd.DataFrame(
+                {
+                    "url": [data['url']],
+                    "density_bin": [data['density_bin']],
+                    "compression_bin": [data['compression_bin']],
+                    "coverage_bin": [data['coverage_bin']],
+                }).iloc[0]
+        )
 
         st.write("**Ground Truth Summary:**")
         st_annotate_highlights(data["summary"], data["highlights"])
