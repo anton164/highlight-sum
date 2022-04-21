@@ -70,47 +70,6 @@ def select_summary_sentences_and_entities(
     return " ".join(result), selected_entities
 
 
-def should_exclude_summary(summary: str) -> bool:
-    """
-    Exclude summary iff number of words is less than 8 OR it matches
-    particular regexs.
-    """
-    if len(summary.split()) < 8:
-        return True
-
-    match = (
-        re.search(re.escape("on FoxNews.com"), summary, re.IGNORECASE)
-        or re.search(re.escape("from FoxNews.com"), summary, re.IGNORECASE)
-        or re.search(
-            re.escape("Collection of all USATODAY.com"), summary, re.IGNORECASE
-        )
-        or re.search(re.escape("washingtonpost.com"), summary, re.IGNORECASE)
-    )
-
-    if match:
-        return True
-    else:
-        return False
-
-
-def should_exclude_source(source):
-    if len(source.split()) < 50:
-        return True
-    if (
-        (source.startswith("Image ") and source[6] in "0123456789")
-        or source.startswith("Photo: ")
-        or '"params":' in source
-    ):
-        return True
-    return False
-
-
-def mark_exclusion(example):
-    example["valid_summary"] = not should_exclude_summary(example["text"])
-    example["valid_source"] = not should_exclude_source(example["text"])
-    return example
-
-
 def write_filtered_summary_sentences_and_entities(example):
     supported_sents, supported_ents = select_summary_sentences_and_entities(
         nlp, example["document"], example["summary"]
@@ -139,12 +98,18 @@ def build_metadata_dict(dataset) -> dict:
 
 if __name__ == "__main__":
     xsum_test = load_dataset("xsum", split="test")
-    test_sample = xsum_test.train_test_split(test_size=200, seed=42)["test"]
 
     nlp = spacy.load("en_core_web_lg")
-    test_sample_annotated = test_sample.map(
-        write_filtered_summary_sentences_and_entities, num_proc=3
+    test_sample_annotated = xsum_test.map(
+        write_filtered_summary_sentences_and_entities, num_proc=4
     )
+
+    c_supported_sents = 0
+    for x in test_sample_annotated:
+        if len(x["supported_summary_sentences"]) > 0:
+            c_supported_sents += 1
+    print(f"Supported sentences: {c_supported_sents}/{len(test_sample_annotated)} ({c_supported_sents/len(test_sample_annotated):.2%})")
+
 
     id2gold_summary = dict(
         zip(test_sample_annotated["id"], test_sample_annotated["summary"])
