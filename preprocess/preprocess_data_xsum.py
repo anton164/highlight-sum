@@ -5,7 +5,7 @@ from typing import List, Tuple
 import re
 from sumtool.storage import store_model_summaries
 
-
+nlp = spacy.load("en_core_web_lg")
 TRACKING_ENTITY_LIST = [
     "PERSON",
     "FAC",
@@ -103,7 +103,6 @@ def build_metadata_dict(dataset) -> dict:
 if __name__ == "__main__":
     xsum_test = load_dataset("xsum", split="test")
 
-    nlp = spacy.load("en_core_web_lg")
     test_sample_annotated = xsum_test.map(
         write_filtered_summary_sentences_and_entities, num_proc=4
     )

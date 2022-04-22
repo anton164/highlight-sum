@@ -1,9 +1,6 @@
 {
-    "python.testing.pytestEnabled": true,
-    "python.testing.pytestArgs": [
-        "tests"
-    ],
-    "python.formatting.provider": "black",
     "python.linting.flake8Enabled": true,
-    "python.linting.enabled": true
+    "python.linting.flake8Args": ["--ignore=N801, E203, E266, E501, W503, F812, E741, N803, N802, N806"],
+    "python.linting.enabled": true,
+    "python.formatting.provider": "black"
 }
