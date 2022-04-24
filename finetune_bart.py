@@ -144,6 +144,8 @@ if __name__ == "__main__":
     print("Training...", trainer.train(
         resume_from_checkpoint=bool(args.resume_from_checkpoint)
     ))
-    print("Saving model...", trainer.save_model())
+    print("Saving model...", trainer.save_model(
+        f"{args.checkpoint_dir}/{args.run_name}/final"
+    ))
 
     print("Eval after training", trainer.evaluate())
