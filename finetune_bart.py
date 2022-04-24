@@ -116,7 +116,7 @@ if __name__ == "__main__":
         predict_with_generate=True,
         logging_dir="hf-logs",
         logging_steps=50,
-        save_total_limit=3,
+        save_total_limit=2,
         # optimization
         fp16=True,
         gradient_accumulation_steps=args.grad_acc,
