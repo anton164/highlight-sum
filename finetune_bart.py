@@ -77,7 +77,7 @@ def compute_metrics(tokenizer, eval_preds):
     ]
     result["gen_len"] = np.mean(prediction_lens)
     result = {k: round(v, 4) for k, v in result.items()}
-    result["preds"] = decoded_preds
+
     return result
 
 
