@@ -54,7 +54,7 @@ def postprocess_text(preds, labels):
     return preds, labels
 
 
-def compute_metrics(eval_preds):
+def compute_metrics(tokenizer, eval_preds):
     preds, labels = eval_preds
     if isinstance(preds, tuple):
         preds = preds[0]
@@ -135,7 +135,7 @@ if __name__ == "__main__":
         train_dataset=train_tokenized,
         eval_dataset=val_tokenized,
         tokenizer=tokenizer,
-        compute_metrics=compute_metrics,
+        compute_metrics=lambda preds: compute_metrics(tokenizer, preds),
     )
 
     wandb_run = wandb.init(project="highlight-sum", entity="danton-nlp")
