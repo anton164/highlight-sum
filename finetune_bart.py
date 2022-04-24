@@ -14,12 +14,13 @@ from preprocess.preprocess_data_xsum import (
 import argparse
 import wandb
 import nltk
+import numpy.random as np_random
 
 rouge_metric = load_metric("rouge")
 nltk.download("punkt", quiet=True)
 
 
-def load_data(dataset_name: str, is_subset=False):
+def load_data(dataset_name: str):
     if dataset_name == "xsum-subset":
         xsum = load_dataset("xsum")
         # take subset of xsum train
@@ -33,7 +34,10 @@ def load_data(dataset_name: str, is_subset=False):
     elif dataset_name == "xsum-entity-filter":
         dataset = load_from_disk("data/huggingface/xsum-entity-filter")
         data_train = dataset["train"]
-        data_val = dataset["validation"]
+        np_random.seed(42)
+        data_val = dataset["validation"].select(
+            np_random.choice(len(dataset["validation"]), 250, replace=False)
+        )
 
     print(f"Dataset: {dataset_name}", dataset)
     train_tokenized = tokenize_with_cache(
