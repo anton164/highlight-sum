@@ -105,9 +105,11 @@ if __name__ == "__main__":
     training_args = Seq2SeqTrainingArguments(
         output_dir=f"{args.checkpoint_dir}/{args.run_name}",
         num_train_epochs=args.train_epochs,
+        per_device_train_batch_size=args.train_batch_size,
         do_train=True,
         do_eval=True,
-        per_device_train_batch_size=args.train_batch_size,
+        evaluation_strategy="steps",
+        eval_steps=500,
         per_device_eval_batch_size=args.val_batch_size,
         # learning_rate=3e-05,
         warmup_steps=500,
