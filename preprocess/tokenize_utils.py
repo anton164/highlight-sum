@@ -29,7 +29,7 @@ def tokenize(tokenizer, data, max_decode_length=60):
             max_decode_length,  # 60 for train / 100 for test https://github.com/huggingface/transformers/blob/main/examples/research_projects/seq2seq-distillation/README.md
         ),
         batched=True,
-        remove_columns=data.column_names,
+        remove_columns=set(data.column_names) - {"id"},
     )
     return tokenized
 
