@@ -9,6 +9,21 @@ conda activate highlight-sum
 streamlit run app.py
 ```
 
+## Fine-tuning (todo determine the right/best hyperparams)
+python finetune_bart.py WANDB-name \
+    --dataset [xsum, xsum-entity-filter] \
+    --train_batch_size 8 \
+    --val_batch_size 8 \
+    --grad_acc 2 \
+    --train_epochs 2
+## Inference
+```
+python inference_xsum.py \
+    path/to/model \ 
+    --sumtool_path sumtool-name \  #optional
+    --val_batch_size 32
+```
+
 # External repositories
 
 in `/external-repos`
