@@ -132,3 +132,15 @@ dmypy.json
 
 # raw newsroom data
 data/newsroom-raw
+
+# tokenized data
+data/tokenized
+# huggingface datasets
+data/huggingface
+
+# huggingface logs
+hf-logs
+# wandb logs
+wandb
+
+checkpoints
