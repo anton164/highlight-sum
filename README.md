@@ -6,8 +6,8 @@ conda activate highlight-sum
 ## Model results (XSUM test set)
 | Model name | Comment | Test loss | Rouge-1  | Rouge-2  | Rouge-L |
 | ------------- | ------------- | ------------- | ------------- | ------------- | ------------- |
-| entity-filter-v1 | 2 epochs, batch=8 |  | | | |
-| entity-filter-v2 | 2 epochs, batch=16 | 1.675 | 44.26 | 20.93 | 35.92 |
+| entity-filter-v1 | 2 epochs, batch=8 | 1.68 | 44.34 | 21.14 | 35.94 |
+| entity-filter-v2 | 2 epochs, batch=16 | 1.68 | 44.26 | 20.93 | 35.92 |
 | djl-entity-filter | 1 epoch, batch=8  | 1.71 | 43.30  | 20.04  | 34.95 |
 | [The Paper](https://arxiv.org/abs/2102.09130#:~:text=Entity-level%20Factual%20Consistency%20of%20Abstractive%20Text%20Summarization,-Feng%20Nan%2C%20Ramesh&text=A%20key%20challenge%20for%20abstractive,respect%20to%20the%20original%20document.) | Unknown  | N/A | 45.4  | 22.2  | 36.9 |
 
