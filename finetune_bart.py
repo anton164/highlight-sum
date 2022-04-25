@@ -10,11 +10,14 @@ from evaluation.metrics import compute_metrics
 from preprocess.tokenize_utils import tokenize_with_cache
 import argparse
 import wandb
-import numpy.random as np_random
 
 
-def load_data(dataset_name: str):
-    if dataset_name == "xsum-subset":
+def load_data(dataset_name: str, val_sample_size=250):
+    if dataset_name == "xsum":
+        dataset = load_dataset("xsum")
+        data_train = dataset["train"]
+        data_val = dataset["test"]
+    elif dataset_name == "xsum-subset":
         xsum = load_dataset("xsum")
         # take subset of xsum train
         xsum_train_subset = xsum["train"].train_test_split(test_size=1000, seed=42)[
@@ -27,12 +30,15 @@ def load_data(dataset_name: str):
     elif dataset_name == "xsum-entity-filter":
         dataset = load_from_disk("data/huggingface/xsum-entity-filter")
         data_train = dataset["train"]
-        np_random.seed(42)
-        data_val = dataset["validation"].select(
-            np_random.choice(len(dataset["validation"]), 250, replace=False)
-        )
-
+        data_val = dataset["test"]
+    
     print(f"Dataset: {dataset_name}", dataset)
+
+    print(f"Sampling {val_sample_size} for validation set")
+    data_val = dataset["validation"].train_test_split(
+        test_size=val_sample_size,
+        seed=42
+    )["test"]
     train_tokenized = tokenize_with_cache(
         f"{dataset_name}-train", tokenizer, data_train
     )
