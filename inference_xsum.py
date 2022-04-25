@@ -43,6 +43,7 @@ if __name__ == "__main__":
     parser.add_argument("--data_subset", type=int, default=0)
     parser.add_argument("--val_batch_size", type=int, default=32)
     args = parser.parse_args()
+    print("Loading model...")
     model, tokenizer = load_model_and_tokenizer(args.model_path)
     data_collator = DataCollatorForSeq2Seq(tokenizer, model=model)
     trainer = Seq2SeqTrainer(
@@ -57,8 +58,9 @@ if __name__ == "__main__":
         tokenizer=tokenizer,
         compute_metrics=lambda preds: compute_metrics(tokenizer, preds),
     )
-
+    print("Loading data...")
     test_data = load_data(args.dataset, tokenizer, args.data_subset)
+    print(test_data)
     result = trainer.predict(
         test_data,
     )
@@ -72,6 +74,6 @@ if __name__ == "__main__":
         store_model_summaries(
             "xsum",
             args.sumtool_path,
-            model.config,
+            model.config.to_dict(),
             generated_summaries
         )
