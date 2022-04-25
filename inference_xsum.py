@@ -23,7 +23,10 @@ def load_data(dataset_name, tokenizer, data_subset):
     if data_subset != 0:
         data_test = data_test.train_test_split(test_size=data_subset, seed=42)["test"]
     data_test = tokenize_with_cache(
-        f"{dataset_name}-test-{data_subset}", tokenizer, data_test, 100
+        f"{dataset_name}-test-{data_subset}", 
+        tokenizer, 
+        data_test, 
+        100
     )
     return data_test
 
@@ -63,6 +66,7 @@ if __name__ == "__main__":
     print(test_data)
     result = trainer.predict(
         test_data,
+        max_length=100
     )
     print("Metrics", result.metrics)
     decoded_preds = tokenizer.batch_decode(result.predictions, skip_special_tokens=True)
