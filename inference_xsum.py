@@ -40,7 +40,7 @@ if __name__ == "__main__":
     parser.add_argument("model_path", type=str)
     parser.add_argument("--sumtool_path", type=str, default="")
     parser.add_argument("--dataset", type=str, default="xsum-entity-filter")
-    parser.add_argument("--data-subset", type=int, default=0)
+    parser.add_argument("--data_subset", type=int, default=0)
     parser.add_argument("--val_batch_size", type=int, default=32)
     args = parser.parse_args()
     model, tokenizer = load_model_and_tokenizer(args.model_path)
@@ -58,7 +58,7 @@ if __name__ == "__main__":
         compute_metrics=lambda preds: compute_metrics(tokenizer, preds),
     )
 
-    test_data = load_data(args.dataset)
+    test_data = load_data(args.dataset, tokenizer, args.data_subset)
     result = trainer.predict(
         test_data,
     )
