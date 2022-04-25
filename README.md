@@ -3,27 +3,6 @@
 conda create -n highlight-sum python=3.8
 conda activate highlight-sum
 ```
-
-## Run Streamlit app
-```
-streamlit run app.py
-```
-
-## Fine-tuning (todo determine the right/best hyperparams)
-python finetune_bart.py WANDB-name \
-    --dataset [xsum, xsum-entity-filter] \
-    --train_batch_size 8 \
-    --val_batch_size 8 \
-    --grad_acc 2 \
-    --train_epochs 2
-## Inference
-```
-python inference_xsum.py \
-    path/to/model \ 
-    --sumtool_path sumtool-name \  #optional
-    --val_batch_size 32
-```
-
 ## Model results (XSUM test set)
 | Model name | Comment | Test loss | Rouge-1  | Rouge-2  | Rouge-L |
 | ------------- | ------------- | ------------- | ------------- | ------------- | ------------- |
@@ -31,6 +10,28 @@ python inference_xsum.py \
 | entity-filter-v2 | 2 epochs, batch=16 | 1.675 | 44.26 | 20.93 | 35.92 |
 | djl-entity-filter | 1 epoch, batch=8  | 1.71 | 43.30  | 20.04  | 34.95 |
 | [The Paper](https://arxiv.org/abs/2102.09130#:~:text=Entity-level%20Factual%20Consistency%20of%20Abstractive%20Text%20Summarization,-Feng%20Nan%2C%20Ramesh&text=A%20key%20challenge%20for%20abstractive,respect%20to%20the%20original%20document.) | Unknown  | N/A | 45.4  | 22.2  | 36.9 |
+
+## Run Streamlit app
+```
+streamlit run app.py
+```
+## Fine-tuning (todo: determine the right/best hyperparams)
+```
+python finetune_bart.py WANDB-name \
+    --dataset [xsum, xsum-entity-filter] \
+    --train_batch_size 8 \
+    --val_batch_size 8 \
+    --grad_acc 2 \
+    --train_epochs 2
+```
+
+## Inference
+```
+python inference_xsum.py \
+    path/to/model \ 
+    --sumtool_path sumtool-name \  #optional
+    --val_batch_size 32
+```
 
 # External repositories
 
