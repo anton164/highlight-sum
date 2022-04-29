@@ -1,10 +1,12 @@
 import streamlit as st
 from interface.overlaps import render_overlaps
+from interface.comparison import render_model_comparison
 
 
 def render():
     pages = {
-        "Summary Overlaps": render_overlaps
+        "Model Comparison": render_model_comparison,
+        "Summary Overlaps": render_overlaps,
     }
 
     st.sidebar.title("Summarization Highlights")

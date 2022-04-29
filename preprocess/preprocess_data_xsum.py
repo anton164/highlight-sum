@@ -45,7 +45,6 @@ def select_summary_sentences_and_entities(
     This function does filters out sentences of the _summary_ that are not supported by the document.
     A summary sentence is supported if that sentence included a named entity that is in the document.
     """
-
     summary_nlp = nlp(summary)
 
     en_count_in_summary = 0
